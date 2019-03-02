@@ -32,7 +32,7 @@ LogisticRegression(penalty="l2", dual=False, tol=0.0001, C=1.0, fit_intercept=Tr
 * **verbose:** Default is 0 and any positive int set when using "liblinear" or "lbfgs".
 * **warm_start:** Use previous call to fit if set it True, default is False.
 * **n_jobs:** Like LinearRegression, number of CPU to do computation. None means 1, -1 means use all CPUs.
-- [] *Attributes* from the model are  "classes_", "coef_", "intercept_" and "n_iter_", representing target labels in training data, an array for $\hat\beta$, intercept term or 0 when fit_intercept=False and number of iterations respectively.
+- [ ] *Attributes* from the model are  "classes_", "coef_", "intercept_" and "n_iter_", representing target labels in training data, an array for $\hat\beta$, intercept term or 0 when fit_intercept=False and number of iterations respectively.
 
 
 
