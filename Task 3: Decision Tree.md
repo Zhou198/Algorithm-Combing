@@ -80,7 +80,7 @@ clf = clf.fit(iris.data, iris.target)
 export_graphviz(clf, out_file = "tree.dot", filled = True, rounded = True,
                 class_names = iris.target_names, special_characters = True)
 ```
-<div align=center> <img src="https://user-images.githubusercontent.com/47863455/53703007-e5424080-3dda-11e9-92bd-3fcfeeee49bf.png" width="70%" height="70%"></div>
+<div align=center> <img src="https://user-images.githubusercontent.com/47863455/53703007-e5424080-3dda-11e9-92bd-3fcfeeee49bf.png" width="70%" height="70%"> </div>
 
 ## Reference
 * **1.** 周志华 (2016). [机器学习](https://cs.nju.edu.cn/zhouzh/zhouzh.files/publication/MLbook2016.htm)
