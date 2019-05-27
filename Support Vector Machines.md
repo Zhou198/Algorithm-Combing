@@ -67,7 +67,7 @@ K(x, y)&=(1+x^\top y)^2\\\\
 * **Gaussian (Radial Basis Function) Kernel**: $K(x, y)=\exp\left(-\frac{||x-y||^2}{\sigma^2}\right)$.
 
 Similarly, for those SVMs applied with kernel trick, the classifier is $$f(x)=\omega^\top x+b=\sum\limits_{i=1}^N\alpha_iy_iK(x_i, x) +b,$$ and the Lagrangian Dual Problem is $$\begin{aligned}
-&\max_\limits{\alpha} \sum\limits_{i=1}^N\alpha_i-\frac{1}{2}\sum\limits_{i=1}^N\sum\limits_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i, x_j, \\\\ 
+&\max_\limits{\alpha} \sum\limits_{i=1}^N\alpha_i-\frac{1}{2}\sum\limits_{i=1}^N\sum\limits_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i, x_j), \\\\ 
 &\text{s.t. } \sum\limits_{i=1}^N\alpha_iy_i=0, \alpha_i \in [0, C].
 \end{aligned}$$
 ## Sequential Minimal Optimization (SMO) 
