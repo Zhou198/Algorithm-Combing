@@ -46,7 +46,13 @@ L(\omega, b, \xi, \alpha, \beta)&=\frac{1}{2}\sum\limits_{i=1}^N\sum\limits_{j=1
 * **KKT complementary slackness condition**: requires $$\begin{cases}
 \alpha_i[y_i(\omega^\top x_i+b)+\xi_i-1]=0\\\\
 \beta_i\xi_i=0
-\end{cases}$$ Finally, the dual problem becomes $$\begin{aligned}
+\end{cases}.$$ 
+
+*Support Vectors and $\alpha$*: 
+1. For those points with non-zero slack variable ($\xi_i>0$), their corresponding $\alpha_i$'s are exactly equal to $C$.
+2. For those points on $\pm$ planes ($\xi_i=0$), their corresponding $\alpha_i$'s falls into $(0, C)$.
+
+Finally, the dual problem becomes $$\begin{aligned}
 &\max_\limits{\alpha} \sum\limits_{i=1}^N\alpha_i-\frac{1}{2}\sum\limits_{i=1}^N\sum\limits_{j=1}^N\alpha_i\alpha_jy_iy_jx_i^\top x_j, \\\\ 
 &\text{s.t. } \sum\limits_{i=1}^N\alpha_iy_i=0, \alpha_i \in [0, C].
 \end{aligned}$$ Note: If $C \rightarrow +\infty$, this scenario becomes hard margin SVMs.
