@@ -79,7 +79,7 @@ Similarly, for those SVMs applied with kernel trick, the classifier is $$f(x)=\o
 ## Sequential Minimal Optimization (SMO) 
 In SMO algorithm, each loop we just adjust 2 variables, say $\alpha_1, \alpha_2$. 
 Dual problem: $$\begin{aligned}
-W(\alpha)&=\sum_{i=1}^N-\frac{1}{2}\left(\alpha_1y_1\phi(x_1)+\alpha_2y_2\phi(x_2)+\sum_{i=3}^N{\alpha_iy_i\phi(x_i)}\right)^\top \left(\alpha_1y_1\phi(x_1)+\alpha_2y_2\phi(x_2)+\sum_{j=3}^N{\alpha_jy_j\phi(x_j)}\right)^\top\\\\
+W(\alpha)&=\sum_{i=1}^N-\frac{1}{2}\left(\alpha_1y_1\phi(x_1)+\alpha_2y_2\phi(x_2)+\sum_{i=3}^N{\alpha_iy_i\phi(x_i)}\right)^\top \left(\alpha_1y_1\phi(x_1)+\alpha_2y_2\phi(x_2)+\sum_{j=3}^N{\alpha_jy_j\phi(x_j)}\right)\\\\
 &=\alpha_1+\alpha_2+\sum_{i=3}^N\alpha_i-\frac{1}{2}\left(\alpha_1^2K_{11}+\alpha_2^2K_{22}+\sum_{i=3}^N{\sum_{j=3}^N{\alpha_i\alpha_jy_iy_jK_{ij}+2\alpha_1\alpha_2y_1u_2K_{12}+2\alpha_1y_1\sum_{i=3}^N{\alpha_iy_iK_{1i}+2\alpha_2y_2\sum_{i=3}^N{\alpha_iy_iK_{2i}}}}}\right)\\\\
 &=-\frac{1}{2}\alpha_1^2K_{11}-\frac{1}{2}\alpha_2^2K_{22}-\alpha_1\alpha_2y_1y_2K_{12}-\alpha_1y_1\sum_{i=3}^N{\alpha_iy_iK_{1i}}-\alpha_2y_2\sum_{i=3}^N{\alpha_iy_iK_{2i}}+\alpha_1+\alpha_2+\cdots.\\\\
 \end{aligned}$$
@@ -98,7 +98,84 @@ Moreover, $$\begin{aligned}
 &=-\frac{1}{2}||\phi(x_1)-\phi(x_2)||^2\\\\
 &\leq 0,
 \end{aligned}$$
-so $W(\alpha)$ is convex upward and achieves to minimum at $$\alpha_2^{new, uncon}=\frac{\gamma s(K_{11}-K_{12})+1-s+y_2\sum_{i=3}^N{\alpha_iy_i(K_{1i}-K_{2i})}}{K_{11}+K_{22}-2K_{12}}$$ if there is no extra restrictions.
+so $W(\alpha)$ is convex upward and achieves to minimum at $$\alpha_2^{new, unclip}=\frac{\gamma s(K_{11}-K_{12})+1-s+y_2\sum\limits_{i=3}^N{\alpha_iy_i(K_{1i}-K_{2i})}}{K_{11}+K_{22}-2K_{12}}$$ if there is no extra restrictions, where $\gamma=\alpha_1^{old}+\alpha_2^{old}y_1y_2$.
+However, all $\alpha_i$'s are constraint to $[0, C]$, then $\alpha_2^{new, clip}$ should fall into $[L, U]$.
+Recall that $\alpha_1y_1+\alpha_2y_2=-\sum_{i=3}^N\alpha_iy_i=\alpha_1^{old}y_1+\alpha_2^{old}y_2$ is a constant and notated as $\zeta$.
+* **For case $y_1y_2=-1$**:
+$$\begin{cases}
+y_1=1, y_2=-1:\alpha_1-\alpha_2=\zeta\\\\
+y_1=-1, y_2=1:\alpha_2-\alpha_1=\zeta
+\end{cases} \xrightarrow[\zeta<0]{\zeta\geq 0} \begin{cases}
+\alpha_2\in[0,C-\zeta]=[0,C+\alpha_2^{old}-\alpha_1^{old}]\\\\
+\alpha_2\in[\zeta, C]=[\alpha_2^{old}-\alpha_1^{old}, C]\\\\
+\\\\
+\alpha_2\in[-\zeta, C]=[\alpha_2^{old}-\alpha_1^{old}, C]\\\\
+\alpha_2\in[0, C+\zeta]=[0,C+\alpha_2^{old}-\alpha_1^{old}]\\\\
+\end{cases}
+\begin{array}{*{20}{c}}
+   \Rightarrow\begin{cases}
+     L=\max(0, \alpha_2^{old}-\alpha_1^{old})\\\\
+     U=\min(C, C+\alpha_2^{old}-\alpha_1^{old})
+   \end{cases}
+      \\\\
+\\\\
+      \Rightarrow\begin{cases}
+     L=\max(0, \alpha_2^{old}-\alpha_1^{old})\\\\
+     U=\min(C, C+\alpha_2^{old}-\alpha_1^{old})
+   \end{cases}
+\end{array}.
+$$
+
+* **For case $y_1y_2=1$**:
+$$\begin{cases}
+y_1=y_2=1:\alpha_1+\alpha_2=\zeta\\\\
+y_1=y_2=-1:\alpha_2+\alpha_1=-\zeta
+\end{cases} \xrightarrow[\zeta<0]{\zeta\geq 0} \begin{cases}
+\alpha_2\in[\zeta-C, 0]=[\alpha_2^{old}+\alpha_1^{old}-C, 0]\\\\
+\alpha_2\in[0, \zeta]=[0, \alpha_2^{old}+\alpha_1^{old}]\\\\
+\\\\
+\alpha_2\in[-\zeta-C, C]=[\alpha_1^{old}+\alpha_2^{old}-C, C]\\\\
+\alpha_2\in[0, -\zeta]=[0,\alpha_1^{old}+\alpha_2^{old}]\\\\
+\end{cases}
+\begin{array}{*{20}{c}}
+   \Rightarrow\begin{cases}
+     L=\max(0, \alpha_1^{old}+\alpha_2^{old}-C)\\\\
+     U=\min(C, \alpha_1^{old}+\alpha_2^{old})
+   \end{cases}
+      \\\\
+\\\\
+      \Rightarrow\begin{cases}
+   L=\max(0, \alpha_1^{old}+\alpha_2^{old}-C)\\\\
+     U=\min(C, \alpha_1^{old}+\alpha_2^{old})
+   \end{cases}
+\end{array}.
+$$
+
+In conclusion, $$L=\begin{cases}
+\max(0, \alpha_2^{old}-\alpha_1^{old}), \quad y_1y_2=-1\\\\
+\max(0, \alpha_1^{old}+\alpha_2^{old}-C), \quad y_1y_2=1
+\end{cases},\quad
+U=\begin{cases}
+\min(C, \alpha_2^{old}-\alpha_1^{old}+C), \quad y_1y_2=-1\\\\
+\min(C, \alpha_1^{old}+\alpha_2^{old}), \quad y_1y_2=1
+\end{cases}.$$
+
+After being applied the constraints, now the true $\alpha_2$ is $$\alpha_2^{new, clip}=\begin{cases}
+L, \qquad \qquad \quad \alpha_2^{new, unclip}\leq L\\\\
+\alpha_2^{new, unclip},  \quad L\leq \alpha_2^{new, unclip} \leq U\\\\
+U, \qquad \qquad \quad \alpha_2^{new, unclip} \geq U
+\end{cases},$$
+and thus $\alpha_1^{new}=\alpha_1^{old}+y_1y_2(\alpha_2^{old}-\alpha_2^{new, clip})$.
+
+
+
+
+
+
+
+
+
+
 
 
 * **Use built-in iris data to plot a tree:**
