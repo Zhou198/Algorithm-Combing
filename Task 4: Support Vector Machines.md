@@ -77,7 +77,28 @@ Similarly, for those SVMs applied with kernel trick, the classifier is $$f(x)=\o
 &\text{s.t. } \sum\limits_{i=1}^N\alpha_iy_i=0, \alpha_i \in [0, C].
 \end{aligned}$$
 ## Sequential Minimal Optimization (SMO) 
+In SMO algorithm, each loop we just adjust 2 variables, say $\alpha_1, \alpha_2$. 
+Dual problem: $$\begin{aligned}
+W(\alpha)&=\sum_{i=1}^N-\frac{1}{2}\left(\alpha_1y_1\phi(x_1)+\alpha_2y_2\phi(x_2)+\sum_{i=3}^N{\alpha_iy_i\phi(x_i)}\right)^\top \left(\alpha_1y_1\phi(x_1)+\alpha_2y_2\phi(x_2)+\sum_{j=3}^N{\alpha_jy_j\phi(x_j)}\right)^\top\\\\
+&=\alpha_1+\alpha_2+\sum_{i=3}^N\alpha_i-\frac{1}{2}\left(\alpha_1^2K_{11}+\alpha_2^2K_{22}+\sum_{i=3}^N{\sum_{j=3}^N{\alpha_i\alpha_jy_iy_jK_{ij}+2\alpha_1\alpha_2y_1u_2K_{12}+2\alpha_1y_1\sum_{i=3}^N{\alpha_iy_iK_{1i}+2\alpha_2y_2\sum_{i=3}^N{\alpha_iy_iK_{2i}}}}}\right)\\\\
+&=-\frac{1}{2}\alpha_1^2K_{11}-\frac{1}{2}\alpha_2^2K_{22}-\alpha_1\alpha_2y_1y_2K_{12}-\alpha_1y_1\sum_{i=3}^N{\alpha_iy_iK_{1i}}-\alpha_2y_2\sum_{i=3}^N{\alpha_iy_iK_{2i}}+\alpha_1+\alpha_2+\cdots.\\\\
+\end{aligned}$$
+Note: "$\cdots$" means we just omit those terms irrelevant to $\alpha_1$ and $\alpha_2$.
+Since $$\alpha_1y_1+\alpha_2y_2=-\sum_{i=3}^N\alpha_iy_i=\alpha_1^{old}y_1+\alpha_2^{old}y_2,$$ then we can get $$\alpha_1+\alpha_2y_1y_2=-y_1\sum_{i=3}^N\alpha_iy_i=\alpha_1^{old}+\alpha_2^{old}y_1y_2.$$
+For simplicity, set $y_1y_2=s$ and $-y_1\sum_{i=3}^N\alpha_iy_i=\gamma$. Therefore, $$\alpha_1+\alpha_2s=\alpha_1^{old}+\alpha_2^{old}s=\gamma,$$ where $\gamma$ is a constant since all the $y_i$'s are known and $\left\\{\alpha_i\right\\}_{i=3}^N$ are fixed.
 
+So $\alpha_1=\gamma-\alpha_2s$ and pluge this into dual problem. $$\begin{aligned}
+W(\alpha)&=-\frac{1}{2}(\gamma-\alpha_2s)^2K_{11}-\frac{1}{2}\alpha_2^2K_{22}-(\gamma-\alpha_2s)\alpha_2sK_{12}-(\gamma-\alpha_2s)y_1\sum_{i=3}^N{\alpha_iy_iK_{1i}}-\alpha_2y_2\sum_{i=3}^N{\alpha_iy_iK_{2i}}+\gamma-\alpha_2s+\alpha_2+\cdots\\\\
+&=-\frac{1}{2}(\alpha_2^2-2\gamma s\alpha)K_{11}-\frac{1}{2}\alpha_2^2K_{22}-\gamma sK_{12}\alpha_2+\alpha_2^2K_{12}+\alpha_2y_2\sum_{i=3}^N{\alpha_iy_iK_{1i}}-\alpha_2y_2\sum_{i=3}^N{\alpha_iy_iK_{2i}}+(1-s)\alpha_2+\cdots\\\\
+&=-\frac{1}{2}\left(K_{11}+K_{22}-2K_{12}\right)\alpha_2^2+\left(\gamma s(K_{11}-K_{12})+1-s+y_2\sum_{i=3}^N{\alpha_iy_i(K_{1i}-K_{2i})}\right)\alpha_2+\cdots.
+\end{aligned}$$
+
+Moreover, $$\begin{aligned}
+-\frac{1}{2}\left(K_{11}+K_{22}-2K_{12}\right)&=-\frac{1}{2}\left(\phi(x_1)^\top\phi(x_1)+\phi(x_2)^\top\phi(x_2)-2\phi(x_1)^\top\phi(x_2)\right)\\\\
+&=-\frac{1}{2}||\phi(x_1)-\phi(x_2)||^2\\\\
+&\leq 0,
+\end{aligned}$$
+so $W(\alpha)$ is convex upward and achieves to minimum at $$\alpha_2^{new, uncon}=\frac{\gamma s(K_{11}-K_{12})+1-s+y_2\sum_{i=3}^N{\alpha_iy_i(K_{1i}-K_{2i})}}{K_{11}+K_{22}-2K_{12}}$$ if there is no extra restrictions.
 
 
 * **Use built-in iris data to plot a tree:**
