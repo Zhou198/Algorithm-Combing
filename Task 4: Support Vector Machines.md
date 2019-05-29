@@ -101,6 +101,11 @@ Moreover, $$\begin{aligned}
 so $W(\alpha)$ is convex upward and achieves to minimum at $$\alpha_2^{new, unclip}=\frac{\gamma s(K_{11}-K_{12})+1-s+y_2\sum\limits_{i=3}^N{\alpha_iy_i(K_{1i}-K_{2i})}}{K_{11}+K_{22}-2K_{12}}$$ if there is no extra restrictions, where $\gamma=\alpha_1^{old}+\alpha_2^{old}y_1y_2$.
 However, all $\alpha_i$'s are constraint to $[0, C]$, then $\alpha_2^{new, clip}$ should fall into $[L, U]$.
 Recall that $\alpha_1y_1+\alpha_2y_2=-\sum_{i=3}^N\alpha_iy_i=\alpha_1^{old}y_1+\alpha_2^{old}y_2$ is a constant and notated as $\zeta$.
+
+<center class="half">
+    <img src="https://user-images.githubusercontent.com/47863455/58538870-0b059880-81c4-11e9-9ee2-4828b0137454.png" width="40%" height="40%"/ align="left"><img src="https://user-images.githubusercontent.com/47863455/58538926-338d9280-81c4-11e9-945c-7eb95459ad23.png" width="40%" height="40%"/ align="left">
+</center>
+
 * **For case $y_1y_2=-1$**:
 $$\begin{cases}
 y_1=1, y_2=-1:\alpha_1-\alpha_2=\zeta\\\\
