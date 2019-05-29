@@ -102,11 +102,9 @@ so $W(\alpha)$ is convex upward and achieves to minimum at $$\alpha_2^{new, uncl
 However, all $\alpha_i$'s are constraint to $[0, C]$, then $\alpha_2^{new, clip}$ should fall into $[L, U]$.
 Recall that $\alpha_1y_1+\alpha_2y_2=-\sum_{i=3}^N\alpha_iy_i=\alpha_1^{old}y_1+\alpha_2^{old}y_2$ is a constant and notated as $\zeta$.
 
-
 <center class="half">
-    <img src="https://user-images.githubusercontent.com/47863455/58538870-0b059880-81c4-11e9-9ee2-4828b0137454.png" width="40%" height="40%"/ align="left"><img src="https://user-images.githubusercontent.com/47863455/58538926-338d9280-81c4-11e9-945c-7eb95459ad23.png" width="40%" height="40%"/ align="left">
-</center>
-
+    <img src="https://user-images.githubusercontent.com/47863455/58538870-0b059880-81c4-11e9-9ee2-4828b0137454.png" width="40%" height="40%"/ align="right"><img src="https://user-images.githubusercontent.com/47863455/58538926-338d9280-81c4-11e9-945c-7eb95459ad23.png" width="40%" height="40%"/>
+</center>  
 
 * **For case $y_1y_2=-1$**:
 $$\begin{cases}
@@ -177,6 +175,4 @@ and thus $\alpha_1^{new}=\alpha_1^{old}+y_1y_2(\alpha_2^{old}-\alpha_2^{new, cli
 ## Reference
 * **1.** 周志华 (2016). [机器学习](https://cs.nju.edu.cn/zhouzh/zhouzh.files/publication/MLbook2016.htm)
 * **2.** Cristianini, N. and Shawe-Taylor, J. (2000), An introduction to Support Vector Machines: and other kernel-based learning methods, Cambridge University Press.
-* **3.** Hastie, Trevor, Tibshirani, Robert, and Friedman, J. H. (2009). The elements of statistical learning: Data mining, inference, and prediction, 2nd Edition
-* **4.** https://scikit-learn.org/stable/_downloads/scikit-learn-docs.pdf
-* **5.** https://www.cnblogs.com/pinard/p/6056319.html
+* **3.** https://www.cnblogs.com/biyeymyhjob/archive/2012/07/17/2591592.html
