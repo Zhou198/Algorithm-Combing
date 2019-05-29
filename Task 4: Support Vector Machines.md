@@ -63,7 +63,7 @@ Map original data $x$ into a different feature space with much higher dimension:
 A Kernel is a function $K$, such that for all $x, y \in X$, $$K(x, y)=\phi(x)^\top \phi(y).$$ $K(x,y)$ is much easily computational instead of find a mapping and expanding $x$ into $\phi(x)$.
 * **Linear Kernel**: $K(x, y)=x^\top y$.
 * **Polynomial Kernel**: $K(x, y)=(c + x^\top y)^d$.
-ex: $x=(x1, x2)^\top, y=(y_1, y_2)^\top$ and take kernel function $$\begin{aligned}
+ex: $x=(x_1, x_2)^\top, y=(y_1, y_2)^\top$ and take kernel function $$\begin{aligned}
 K(x, y)&=(1+x^\top y)^2\\\\
 &=(1+x_1y_1+x_2y_2)^2\\\\
 &=1+x_1^2y_1^2+x_2^2y_2^2+2x_1y_1+2x_2y_2+2x_1x_2y_1y_2\\\\
