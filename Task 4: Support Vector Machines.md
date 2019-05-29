@@ -102,9 +102,11 @@ so $W(\alpha)$ is convex upward and achieves to minimum at $$\alpha_2^{new, uncl
 However, all $\alpha_i$'s are constraint to $[0, C]$, then $\alpha_2^{new, clip}$ should fall into $[L, U]$.
 Recall that $\alpha_1y_1+\alpha_2y_2=-\sum_{i=3}^N\alpha_iy_i=\alpha_1^{old}y_1+\alpha_2^{old}y_2$ is a constant and notated as $\zeta$.
 
+
 <center class="half">
     <img src="https://user-images.githubusercontent.com/47863455/58538870-0b059880-81c4-11e9-9ee2-4828b0137454.png" width="40%" height="40%"/ align="left"><img src="https://user-images.githubusercontent.com/47863455/58538926-338d9280-81c4-11e9-945c-7eb95459ad23.png" width="40%" height="40%"/ align="left">
 </center>
+
 
 * **For case $y_1y_2=-1$**:
 $$\begin{cases}
@@ -171,32 +173,6 @@ L, \qquad \qquad \quad \alpha_2^{new, unclip}\leq L\\\\
 U, \qquad \qquad \quad \alpha_2^{new, unclip} \geq U
 \end{cases},$$
 and thus $\alpha_1^{new}=\alpha_1^{old}+y_1y_2(\alpha_2^{old}-\alpha_2^{new, clip})$.
-
-
-
-
-
-
-
-
-
-
-
-
-* **Use built-in iris data to plot a tree:**
-```python
-from sklearn.datasets import load_iris
-from sklearn import tree
-from sklearn.tree import export_graphviz
-
-iris = load_iris()
-clf = tree.DecisionTreeClassifier()
-clf = clf.fit(iris.data, iris.target)
-
-export_graphviz(clf, out_file = "tree.dot", filled = True, rounded = True,
-                class_names = iris.target_names, special_characters = True)
-```
-<div align=center> <img src="https://user-images.githubusercontent.com/47863455/53703007-e5424080-3dda-11e9-92bd-3fcfeeee49bf.png" width="70%" height="70%"></div>
 
 ## Reference
 * **1.** 周志华 (2016). [机器学习](https://cs.nju.edu.cn/zhouzh/zhouzh.files/publication/MLbook2016.htm)
