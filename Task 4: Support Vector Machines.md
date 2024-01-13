@@ -1,12 +1,12 @@
 ## Hard Margin SVMs (Linearly separable)
 Assume linearly separable data $\\{(x_i, y_i)\\}_{i=1}^N$ with dimension $N\times p$ .
-*  **Hyperplanes**: The separating hyperplane $f(x)=\omega^\top x + b=0$ has a $p-1$ dimension. The positive plane is $f(x)=\omega^\top x + b=A$ for some $A>0$. So for those $y_i=+1$ samples with feature $x_i$'s, $\omega^\top x_i + b\geq A$. Conversely, the negative plane is $f(x)=\omega^\top x + b=-A$ and those $y_i=-1$ samples with feature $x_i$'s satisfy $\omega^\top x_i + b\leq-A$. Therefore, for any data point from linearly separated samples, we have $$y_if(x_i)=y_i(\omega^\top x_i + b)\geq A.$$
+*  **Hyperplanes**: The separating hyperplane $f(x)=\omega^\top x + b=0$ has a $p-1$ dimension. The positive plane is $f(x)=\omega^\top x + b=A$ for some $A\geq0$. So for those $y_i=+1$ samples with feature $x_i$'s, $\omega^\top x_i + b\geq A$. Conversely, the negative plane is $f(x)=\omega^\top x + b=-A$ and those $y_i=-1$ samples with feature $x_i$'s satisfy $\omega^\top x_i + b\leq-A$. Therefore, for any data point from linearly separated samples, we have $$y_if(x_i)=y_i(\omega^\top x_i + b)\geq A.$$
 
 * **Margin**: Denote these points on $\pm$ planes as support vectors with notation $x_{SV}$. Therefore, $$|f(x_{SV})|=|\omega^\top x_{SV} + b|=A,$$ and the margin defined as the distance between $\pm$ planes  and that we want to maximize is $$\frac{2A}{||\omega||}.$$
 
 * **Objective Problem**: Since we can arbitrarily multiply a non-zero constant for two sides of $f(x)=\omega^\top x + b=A$, for simplicity, we just scale the $\omega$ such that the $A=1$. Then the problem becomes to $$\max_\limits{\omega, b}\frac{2}{||\omega||},   \quad \text{s.t.  } y_i(\omega^\top x_i + b)\geq 1,$$ which is equivalent to  $$\min_\limits{\omega, b}\frac{1}{2}||\omega||^2,   \quad \text{s.t.  } y_i(\omega^\top x_i + b)\geq 1.$$
 
-* **Solve Problem**: Use Lagrangian method to deal with this problem. $$L=\frac{1}{2}||\omega||^2-\sum\limits_{i=1}^N\alpha_i[y_i(\omega^\top x_i + b)-1],$$ where $\alpha_i\geq 0$ are Lagrangian multipliers.
+* **Solve Problem**: Use the Lagrangian method to deal with this problem. $$L=\frac{1}{2}||\omega||^2-\sum\limits_{i=1}^N\alpha_i[y_i(\omega^\top x_i + b)-1],$$ where $\alpha_i\geq 0$ are Lagrangian multipliers.
 $$\begin{cases}
 \frac{\partial{L}}{\partial{\omega}}=\omega-\sum\limits_{i=1}^N\alpha_iy_ix_i=0\\\\
 \frac{\partial{L}}{\partial{b}}=-\sum\limits_{i=1}^N\alpha_iy_i=0\\\\
@@ -49,7 +49,7 @@ L(\omega, b, \xi, \alpha, \beta)&=\frac{1}{2}\sum\limits_{i=1}^N\sum\limits_{j=1
 \end{cases}.$$ 
 
 *Support Vectors and $\alpha$*: 
-1. For those points with non-zero slack variable ($\xi_i>0$), their corresponding $\alpha_i$'s are exactly equal to $C$.
+1. For those points with non-zero slack variable ($\xi_i\geq0$), their corresponding $\alpha_i$'s are exactly equal to $C$.
 2. For those points on $\pm$ planes ($\xi_i=0$), their corresponding $\alpha_i$'s falls into $(0, C)$.
 
 Finally, the dual problem becomes $$\begin{aligned}
