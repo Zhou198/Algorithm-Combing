@@ -22,7 +22,7 @@ $$\ell(\mathbf{\beta})=\frac{1}{n}\sum_{i=1}^n\left(y_i-h(x_i, \beta)\right)^2=\
 $$\min  \frac{1}{n}\left(Y-X\mathbf{\beta}\right)^\top\left(Y-X\mathbf{\beta}\right)+\lambda||\beta||_p^p.$$ If we do not consider sparsity, we can set $\lambda =0$.
 
 ## 4.  Optimization Methods
-* **Gradient Descent:**  $\beta^{(k+1)}\leftarrow\beta^{(k)}-\gamma\dot\ell\left(\beta^{(k)}\right)$, where $0<\gamma\leq 1$ is step size.
+* **Gradient Descent:**  $\beta^{(k+1)}\leftarrow\beta^{(k)}-\gamma\dot\ell\left(\beta^{(k)}\right)$, where $0\leq\gamma\leq 1$ is step size.
 * **Newton-Raphson:** $\beta^{(k+1)}\leftarrow \beta^{(k)}-\left[\ddot\ell\left(\beta^{(k)}\right)\right]^{-1}\dot\ell\left(\beta^{(k)}\right).$
 <div align=center> <img src="https://user-images.githubusercontent.com/47863455/53610596-775b0680-3b99-11e9-8d9f-ccda57c65f1c.jpeg" width="50%" height="50%" “Plot for Newton-Raphson”></div>
 
